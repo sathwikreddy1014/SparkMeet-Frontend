@@ -6,6 +6,7 @@ import appStore from "../utils/appstore";
 import Feed from "./components/Feed";
 import ErrorPage from "./components/ErrorPage";
 import Profile from "./components/Profile";
+<<<<<<< HEAD
 import VerifyResetCode from "./components/VerifyResetCode";
 import ForgotPassword from "./components/ForgotPassword";
 import NewPassword from "./components/NewPassword";
@@ -45,5 +46,5 @@ export default function App() {
         </Routes>
       </BrowserRouter>
     </Provider>
-  );
-}
+=======
+
