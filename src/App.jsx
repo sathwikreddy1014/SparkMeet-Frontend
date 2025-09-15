@@ -6,11 +6,13 @@ import appStore from "../utils/appstore";
 import Feed from "./components/Feed";
 import ErrorPage from "./components/ErrorPage";
 import Profile from "./components/Profile";
-<<<<<<< HEAD
+
 import VerifyResetCode from "./components/VerifyResetCode";
 import ForgotPassword from "./components/ForgotPassword";
 import NewPassword from "./components/NewPassword";
 import ResetRoute from "./components/ResetRoute";
+import Connections from "./components/Connections";
+import Requests from "./components/Requests";
 
 export default function App() {
   return (
@@ -42,9 +44,12 @@ export default function App() {
           <Route path="/" element={<Body />}>
             <Route index element={<Feed />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="/user/connections" element={<Connections />} />
+            <Route path="/request/review" element={<Requests/>} />
           </Route>
         </Routes>
       </BrowserRouter>
     </Provider>
-=======
 
+          )
+        }

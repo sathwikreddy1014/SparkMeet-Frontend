@@ -15,7 +15,7 @@ const Feed = () => {
       const res = await axios.get(BASE_URL + "/feed", {
         withCredentials: true
       })
-      dispatch(addFeed(res.data))
+      dispatch(addFeed(res.data.data))
     } catch (error) {
       console.error("Failed to fetch feed:", error)
     }
@@ -25,10 +25,16 @@ const Feed = () => {
     getFeed()
   }, [])
 
+  if(!feed) return;
+
+  if(feed.length == 0) {
+    return <h1 className='text-center font-bold text-2xl'>You have completed your daily profiles</h1>
+  }
+
   return (
     <div className="flex justify-center my-10">
       {feed && feed.length > 0 ? (
-        <Usercard user={feed?.data[0]} />  // ✅ pass actual user
+        <Usercard user={feed[0]} /> 
       ) : (
         <p className="text-gray-500">No feed available</p>
       )}

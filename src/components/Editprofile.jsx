@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../../utils/userSlice";
 
 const Editprofile = ({ user }) => {
-  console.log(user);
 
   const [firstName, setfirstname] = useState(user.data?.firstName || "");
   const [lastName, setlastName] = useState(user.data?.lastName || "");
@@ -93,7 +92,7 @@ const Editprofile = ({ user }) => {
                 </label>
                 <input
                   type="url"
-                  value={photoUrl}
+                  value={photoUrl || "https://media.istockphoto.com/id/1131164548/vector/avatar-5.jpg?s=612x612&w=0&k=20&c=CK49ShLJwDxE4kiroCR42kimTuuhvuo2FH5y_6aSgEo="}
                   className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 dark:bg-gray-700 dark:text-white"
                   onChange={(e) => setphotoUrl(e.target.value)}
                 />
