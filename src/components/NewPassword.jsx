@@ -1,9 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../../utils/constants";
+import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { clearForgotEmail } from "../../utils/forgotSlice";
+import { clearForgotEmail } from "../utils/forgotSlice";
 
 const NewPassword = () => {
   const [password, setPassword] = useState("");

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Body from "./components/Body";
 import Login from "./components/Login";
 import { Provider } from "react-redux";
-import appStore from "../utils/appstore";
+import appStore from "./utils/appstore";
 import Feed from "./components/Feed";
 import ErrorPage from "./components/ErrorPage";
 import Profile from "./components/Profile";
@@ -13,6 +13,7 @@ import NewPassword from "./components/NewPassword";
 import ResetRoute from "./components/ResetRoute";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
+import Chat from "./components/Chat";
 
 export default function App() {
   return (
@@ -46,6 +47,7 @@ export default function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="/user/connections" element={<Connections />} />
             <Route path="/request/review" element={<Requests/>} />
+            <Route path="room/:id" element={<Chat />} />
           </Route>
         </Routes>
       </BrowserRouter>

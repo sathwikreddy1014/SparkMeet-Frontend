@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { sendOtp } from "../../utils/sendOtpThunk";   // thunk
-import { setForgotEmail } from "../../utils/forgotSlice"; // new slice
+import { sendOtp } from "../utils/sendOtpThunk";   // thunk
+import { setForgotEmail } from "../utils/forgotSlice"; // new slice
 
 const ForgotPassword = () => {
   const [emailId, setemailId] = useState("iyer@gmail.com");

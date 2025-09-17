@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL } from "../../utils/constants";
-import { setForgotEmail } from "../../utils/forgotSlice";
+import { BASE_URL } from "../utils/constants";
+import { setForgotEmail } from "../utils/forgotSlice";
 
 const VerifyResetCode = () => {
   const [otp, setOtp] = useState("");
