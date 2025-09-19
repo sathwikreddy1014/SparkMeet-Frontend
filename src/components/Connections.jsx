@@ -4,7 +4,7 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/ConnectionSlice";
 import { motion } from "framer-motion";
-import { MessageCircle, MapPin, Users } from "lucide-react";
+import { MessageCircle, MapPin, Users, ArrowLeft} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Connections = () => {
@@ -51,6 +51,12 @@ const handleChatClick = (id ) => {
 
   return (
     <div className="  gap-6  bg-base-200 py-6 px-4 sm:px-6 md:px-10">
+       <button
+        onClick={() => navigate("/")}
+        className="p-2 hover:bg-gray-100 rounded-full"
+      >
+        <ArrowLeft className="w-5 h-5 text-gray-600" />
+      </button>
       {connections.map((connection, index) => {
         const {
           _id,

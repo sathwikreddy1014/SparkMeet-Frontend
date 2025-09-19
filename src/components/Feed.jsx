@@ -1,45 +1,53 @@
-import axios from 'axios'
-import React, { useEffect } from 'react'
-import { BASE_URL } from '../utils/constants'
-import { useDispatch, useSelector } from 'react-redux'
-import { addFeed } from '../utils/feedSlice'
-import Usercard from './Usercard'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
+import { addFeed } from "../utils/feedSlice";
+import Usercard from "./Usercard";
 
 const Feed = () => {
-  const dispatch = useDispatch()
-  const feed = useSelector((store) => store.feed) // check your slice structure
+  const dispatch = useDispatch();
+  const feed = useSelector((store) => store.feed); // feed list
+  const currentUser = useSelector((store) => store.user); // logged-in user
 
-  const getFeed = async () => {
-    if (feed && feed.length > 0) return // ✅ prevents duplicate fetch
-    try {
-      const res = await axios.get(BASE_URL + "/feed", {
-        withCredentials: true
-      })
-      dispatch(addFeed(res.data.data))
-    } catch (error) {
-      console.error("Failed to fetch feed:", error)
-    }
-  }
-
+  // Fetch feed from backend (only once)
   useEffect(() => {
-    getFeed()
-  }, [])
+    const getFeed = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/feed`, {
+          withCredentials: true,
+        });
+        dispatch(addFeed(res.data?.data));
+      } catch (err) {
+        console.error("Failed to fetch feed:", err);
+      }
+    };
 
-  if(!feed) return;
+    if (!feed || feed.length === 0) {
+      getFeed();
+    }
+  }, [dispatch, feed]);
 
-  if(feed.length == 0) {
-    return <h1 className='text-center font-bold text-2xl'>You have completed your daily profiles</h1>
+  if (!feed) return null;
+
+  if (feed.length === 0) {
+    return (
+      <h1 className="text-center font-bold text-2xl">
+        You have completed your daily profiles
+      </h1>
+    );
   }
+
+  // 👇 Override feed card if it's the logged-in user
+  const firstFeedUser = feed[0];
+  const userToShow =
+    firstFeedUser._id === currentUser._id ? currentUser : firstFeedUser;
 
   return (
-    <div className="flex justify-center  bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600">
-      {feed && feed.length > 0 ? (
-        <Usercard user={feed[0]} /> 
-      ) : (
-        <p className="text-gray-500">No feed available</p>
-      )}
+    <div className="flex justify-center m-16   ">
+      <Usercard user={userToShow} />
     </div>
-  )
-}
+  );
+};
 
-export default Feed
+export default Feed;

@@ -2,65 +2,132 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { removeoneFeed } from "../utils/feedSlice";
+import { Heart, X } from "lucide-react";
 
-const Usercard = ({user}) => {
+const Usercard = ({ user }) => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch() 
+  const {
+    _id,
+    firstName,
+    lastName,
+    age,
+    photoUrl,
+    location,
+    height,
+    education,
+    occupation,
+    belief,
+    lookingFor,
+    drinking,
+    smoking,
+    diet,
+    languages,
+    sports,
+    travelPreferences,
+    pets,
+  } = user;
 
-  const { _id, firstName, lastName, age, gender, photoUrl, about, skills } = user
-
-  const reviewMatch = async (status , userId) => {
+  // Match decision handler
+  const reviewMatch = async (status, userId) => {
     try {
-      await axios.post(BASE_URL + "/request/send/"+ status + "/" + userId, {}, {withCredentials:true})
-      dispatch(removeoneFeed(_id))
+      await axios.post(
+        `${BASE_URL}/request/send/${status}/${userId}`,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(removeoneFeed(_id));
     } catch (error) {
-      console.error("error", error.message)
+      console.error("error", error.message);
     }
-  }
+  };
+
+  // Chip renderer with safe unique key
+  const chip = (text, color, key) => (
+    <span
+      key={key}
+      className={`text-white text-xs sm:text-sm px-3 py-1 rounded-full ${color}`}
+    >
+      {text}
+    </span>
+  );
 
   return (
-<div className=" shadow-lg rounded-2xl overflow-hidden max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto transition-transform hover:scale-105 duration-300">
-  {/* Image Section */}
-  <figure className="h-56 sm:h-64 md:h-72 w-full flex items-center justify-center">
-    <img
-      src={photoUrl ? photoUrl : "https://media.istockphoto.com/id/1131164548/vector/avatar-5.jpg?s=612x612&w=0&k=20&c=CK49ShLJwDxE4kiroCR42kimTuuhvuo2FH5y_6aSgEo="}
-      alt="userPhoto"
-      className="object-contain max-h-full max-w-full rounded-t-2xl"
-    />
-  </figure>
+    <div className="relative w-full max-w-md md:max-w-lg mx-auto rounded-3xl overflow-hidden shadow-2xl">
+      <figure className="w-full h-[36rem] relative">
+        {/* User Image */}
+        <img
+          src={
+            photoUrl ||
+            `https://ui-avatars.com/api/?name=${firstName}+${lastName}&background=random&size=512`
+          }
+          alt="userPhoto"
+          className="w-full h-full object-cover"
+        />
 
-  {/* Body Section */}
-  <div className="p-4 sm:p-6 md:p-8 flex flex-col gap-3 sm:gap-4 md:gap-5">
-    <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-center">
-      {firstName + " " + lastName}
-    </h2>
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
 
-    {/* Info */}
-    <div className="flex flex-col gap-1 sm:gap-2 text-sm sm:text-base md:text-lg text-center">
-      {about && <p className="text-gray-700">{about}</p>}
-      {age && <p className="text-gray-500">{age} years old</p>}
-      {gender && <p className="text-gray-500 capitalize">{gender}</p>}
-      {skills && <p className="text-gray-600">{skills}</p>}
+        {/* Top Info */}
+        <div className="absolute top-0 left-0 w-full p-5">
+          <h2 className="text-3xl font-bold text-white">
+            {firstName} {lastName && lastName.charAt(0) + "."}, {age}
+          </h2>
+          {location && <p className="text-gray-200 text-sm">{location}</p>}
+        </div>
+
+        {/* Bottom Info */}
+        <div className="absolute bottom-24 left-0 w-full px-5 flex flex-wrap gap-2">
+          {/* Education & Occupation */}
+          {education && chip(education, "bg-purple-600/70", "edu")}
+          {occupation && chip(occupation, "bg-purple-600/70", "occ")}
+
+          {/* Height & Relationship */}
+          {height && chip(height, "bg-blue-600/70", "height")}
+          {lookingFor && chip(lookingFor, "bg-blue-600/70", "relation")}
+
+          {/* Belief */}
+          {belief && chip(belief, "bg-pink-600/70", "belief")}
+
+          {/* Lifestyle */}
+          {diet && chip(diet, "bg-green-600/70", "diet")}
+          {drinking && chip(`Drinks: ${drinking}`, "bg-green-600/70", "drink")}
+          {smoking && chip(`Smokes: ${smoking}`, "bg-green-600/70", "smoke")}
+          {pets && chip(pets, "bg-green-600/70", "pets")}
+
+          {/* Sports */}
+          {sports?.map((s, i) =>
+            chip(s, "bg-orange-600/70", `sport-${i}`)
+          )}
+
+          {/* Travel */}
+          {travelPreferences?.map((t, i) =>
+            chip(t, "bg-yellow-600/70", `travel-${i}`)
+          )}
+
+          {/* Languages */}
+          {languages?.map((l, i) =>
+            chip(l, "bg-teal-600/70", `lang-${i}`)
+          )}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="absolute bottom-5 left-0 w-full flex justify-around px-8">
+          <button
+            className="bg-red-500 hover:bg-red-600 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-3xl transition-transform hover:scale-110"
+            onClick={() => reviewMatch("pass", _id)}
+          >
+            <X size={36} />
+          </button>
+          <button
+            className="bg-green-500 hover:bg-green-600 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-3xl transition-transform hover:scale-110"
+            onClick={() => reviewMatch("like", _id)}
+          >
+            <Heart size={36} />
+          </button>
+        </div>
+      </figure>
     </div>
-
-    {/* Actions */}
-    <div className="flex justify-center gap-4 mt-4 sm:mt-6">
-      <button
-        className="btn btn-outline btn-error rounded-lg px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base flex-1"
-        onClick={() => reviewMatch("pass", _id)}
-      >
-        Pass
-      </button>
-      <button
-        className="btn btn-primary rounded-lg px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base flex-1"
-        onClick={() => reviewMatch("like", _id)}
-      >
-        Like
-      </button>
-    </div>
-  </div>
-</div>
-
   );
 };
 
