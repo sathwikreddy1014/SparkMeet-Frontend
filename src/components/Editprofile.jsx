@@ -118,7 +118,7 @@ const Editprofile = ({ user }) => {
                   <label className="block text-gray-600 dark:text-gray-300 mb-2">Photo URL</label>
                   <input
                     type="url"
-                    value={photoUrl || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSYbP-248zDkKcJG_swsx0pK2Hhe8hwE0fHQ&s"}
+                    value={photoUrl ||  `https://ui-avatars.com/api/?name=${firstName}+${lastName}&background=random&size=512`}
                     className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 dark:bg-gray-700 dark:text-white"
                     onChange={(e) => setphotoUrl(e.target.value)}
                   />

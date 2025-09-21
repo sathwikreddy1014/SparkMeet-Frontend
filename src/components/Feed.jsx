@@ -30,21 +30,18 @@ const Feed = () => {
 
   if (!feed) return null;
 
-  if (feed.length === 0) {
-    return (
-      <h1 className="text-center font-bold text-2xl">
-        You have completed your daily profiles
-      </h1>
-    );
-  }
+  if (!currentUser || !feed || feed.length === 0) {
+  return null; // or a placeholder
+}
 
-  // 👇 Override feed card if it's the logged-in user
-  const firstFeedUser = feed[0];
-  const userToShow =
-    firstFeedUser._id === currentUser._id ? currentUser : firstFeedUser;
+const firstFeedUser = feed[0];
+const userToShow =
+  firstFeedUser._id === currentUser._id ? currentUser : firstFeedUser;
+
+
 
   return (
-    <div className="flex justify-center m-16   ">
+    <div className="h-screen w-screen">
       <Usercard user={userToShow} />
     </div>
   );

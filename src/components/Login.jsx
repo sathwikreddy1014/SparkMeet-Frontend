@@ -21,6 +21,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [toast, settoast] = useState(false)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,6 +46,8 @@ const Login = () => {
           { withCredentials: true }
         );
         dispatch(addUser(res?.data?.data || res?.data));
+        settoast(true)
+        setTimeout(() => settoast(false), 3000);
         navigate("/");
       } else {
         res = await axios.post(`${BASE_URL}/signup`, formData, { withCredentials: true });
@@ -52,8 +55,8 @@ const Login = () => {
         navigate("/profile");
       }
     } catch (err) {
-      console.error(err.message);
-      setError(`${isLogin ? "LOGIN" : "SIGNUP"} FAILED. PLEASE TRY AGAIN.`);
+      console.error(err?.response?.data?.error);
+      setError(`${isLogin ? "LOGIN" : "SIGNUP"} FAILED. PLEASE TRY AGAIN. ${err?.response?.data?.error}`);
     } finally {
       setLoading(false);
     }
@@ -230,8 +233,16 @@ const Login = () => {
             </span>
           </div>
         </motion.div>
+        {toast && (
+        <div className="toast toast-top toast-center py-20">
+          <div className="alert alert-success">
+            <span>Profile Updated Successfully.</span>
+          </div>
+        </div>
+      )}
       </motion.div>
     </div>
+    
   );
 };
 

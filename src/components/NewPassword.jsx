@@ -4,9 +4,11 @@ import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearForgotEmail } from "../utils/forgotSlice";
+import { ArrowLeft } from "lucide-react";
 
 const NewPassword = () => {
-  const [password, setPassword] = useState("");
+  const [newPassword, setnewPassword] = useState("");
+  const [error, seterror] = useState("")
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -14,11 +16,10 @@ const NewPassword = () => {
     e.preventDefault();
 
     try {
-      const emailId = localStorage.getItem("forgotEmail");
-
+      // const emailId = localStorage.getItem("forgotEmail");
       await axios.post(
         BASE_URL + "/reset-password",
-        { emailId, password },
+        { newPassword},
         { withCredentials: true }
       );
 
@@ -30,27 +31,48 @@ const NewPassword = () => {
       alert("Password reset successful. Please log in.");
       navigate("/login");
     } catch (err) {
-      console.error("Reset error:", err.response?.data || err.message);
+      seterror(`Reset error: ${err.response?.data?.message} `);
       alert(err.response?.data?.message || "Password reset failed");
+      navigate("/login");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-900">
-      <div className="w-full max-w-md bg-neutral-800 rounded-2xl shadow-lg p-8 border border-neutral-700">
-        <h2 className="text-white text-2xl font-bold text-center mb-2">
+     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-neutral-900 to-neutral-800 px-4">
+      <div className="relative w-full max-w-md bg-neutral-900/90 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-neutral-700">
+        
+        {/* Back button */}
+        <button
+          onClick={() => navigate("/verify-reset-code")}
+          className="absolute top-4 left-4 p-2 hover:bg-neutral-800 rounded-full transition"
+        >
+          <ArrowLeft className="w-6 h-6 text-neutral-400 hover:text-white" />
+        </button>
+
+        {/* Heading */}
+        <h2 className="text-white text-3xl font-semibold text-center mb-6">
           Set New Password
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
           <input
             type="password"
             placeholder="Enter new password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={newPassword}
+            onChange={(e) => setnewPassword(e.target.value)}
             required
-            className="input input-bordered w-full bg-neutral-700 text-white placeholder-neutral-400"
+            className="w-full px-4 py-3 rounded-lg border border-neutral-700 bg-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
           />
-          <button type="submit" className="btn btn-primary w-full rounded-lg">
+
+          {error && (
+            <p className="text-red-500 text-center text-sm mt-2">{error}</p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg shadow-md transition"
+          >
             Reset Password
           </button>
         </form>

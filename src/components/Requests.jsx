@@ -15,7 +15,6 @@ const Requests = () => {
 
   const reviewRequest = async (status, _id) => {
     const url = `${BASE_URL}/request/review/${status}/${_id}`;
-    console.log("Calling:", url);
 
     try {
       await axios.post(url, {}, { withCredentials: true });
@@ -44,13 +43,22 @@ const Requests = () => {
 
   if (requests.length === 0) {
     return (
+      <>
+      <button
+        onClick={() => navigate("/")}
+        className="p-2 hover:bg-gray-100 rounded-full"
+      >
+        <ArrowLeft className="w-5 h-5 text-gray-600" />
+      </button>
       <div className="flex flex-col items-center justify-center h-full p-8 text-center">
+        
         <Heart className="w-16 h-16 text-pink-300 mb-4" />
         <h2 className="text-2xl font-bold text-gray-800 mb-2">No requests yet</h2>
         <p className="text-gray-600">
           When someone likes your profile, they'll appear here
         </p>
       </div>
+      </>
     );
   }
 
@@ -81,7 +89,7 @@ const Requests = () => {
             <div className="flex">
               <div className="w-24 h-32 sm:w-32 sm:h-40 lg:w-40 lg:h-48">
                 <img
-                  src={photoUrl}
+                  src={photoUrl ||  `https://ui-avatars.com/api/?name=${firstName}+${lastName}&background=random&size=512`}
                   alt={firstName}
                   className="w-full h-full object-cover"
                 />

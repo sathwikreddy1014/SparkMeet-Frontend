@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { setForgotEmail } from "../utils/forgotSlice";
+import {  ArrowLeft} from "lucide-react";
 
 const VerifyResetCode = () => {
   const [otp, setOtp] = useState("");
+  const [error, seterror] = useState('')
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -45,35 +47,66 @@ const VerifyResetCode = () => {
       navigate("/reset-password");
       dispatch(setForgotEmail(activeEmail));
     } catch (err) {
-      console.error("Verification error:", err.response?.data?.message || err.message);
+      seterror( ` Verification Error : ${err.response?.data?.message || err.message}`);
       alert(err.response?.data?.message || "Verification failed");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-900">
-      <div className="w-full max-w-md bg-neutral-800 rounded-2xl shadow-lg p-8 border border-neutral-700">
-        <h2 className="text-white text-2xl font-bold text-center mb-2">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-neutral-900 to-neutral-800 px-4">
+      <div className="relative w-full max-w-md bg-neutral-900/90 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-neutral-700">
+        
+        {/* Back button */}
+        <button
+          onClick={() => navigate("/forgot-password")}
+          className="absolute top-4 left-4 p-2 hover:bg-neutral-800 rounded-full transition"
+        >
+          <ArrowLeft className="w-6 h-6 text-neutral-400 hover:text-white" />
+        </button>
+
+        {/* Heading */}
+        <h2 className="text-white text-3xl font-semibold text-center mb-2">
           Verify OTP
         </h2>
-        <p className="text-neutral-400 text-sm text-center mb-6">
-          Enter the 6-digit OTP sent to your email
+        <p className="text-neutral-400 text-sm text-center mb-8">
+          Enter the 6-digit code we sent to your email
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
           <input
             type="text"
+            maxLength={6}
             placeholder="Enter OTP"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
             required
-            className="input input-bordered w-full bg-neutral-700 text-white placeholder-neutral-400"
+            className="w-full px-4 py-3 rounded-lg border border-neutral-700 bg-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
           />
 
-          <button type="submit" className="btn btn-primary w-full rounded-lg">
+          {error && (
+            <p className="text-red-500 text-center text-sm">{error}</p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg shadow-md transition"
+          >
             Verify OTP
           </button>
         </form>
+
+        {/* Extra options */}
+        <p className="text-neutral-400 text-xs text-center mt-6">
+          Didn’t get the code?{" "}
+          <button
+            type="button"
+            className="text-indigo-400 hover:underline"
+            onClick={handleSubmit}
+          >
+            Resend OTP
+          </button>
+        </p>
       </div>
     </div>
   );

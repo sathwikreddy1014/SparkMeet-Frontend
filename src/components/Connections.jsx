@@ -50,7 +50,7 @@ const handleChatClick = (id ) => {
   }
 
   return (
-    <div className="  gap-6  bg-base-200 py-6 px-4 sm:px-6 md:px-10">
+    <div className="  gap-6 bg-base-200 py-3 px-4 sm:p-5   md:px-10 ">
        <button
         onClick={() => navigate("/")}
         className="p-2 hover:bg-gray-100 rounded-full"
@@ -77,15 +77,15 @@ const handleChatClick = (id ) => {
   animate={{ opacity: 1, x: 0 }}
   transition={{ delay: index * 0.1 }}
   onClick={() => handleChatClick(_id)}
-  className="bg-white rounded-xl lg:rounded-2xl p-3 sm:p-4 lg:p-6 flex items-center space-x-3 sm:space-x-4 
+  className="bg-white rounded-xl lg:rounded-2xl p-3  sm:p-4 lg:p-6 flex items-center space-x-3 sm:space-x-4 
              hover:bg-gray-500 cursor-pointer transition-colors
-             w-full max-w-full md:max-w-md lg:max-w-lg m-0 md:m-5
-             ml-0 md:ml-auto" // ml-auto pushes it to right on larger screens
+             w-full max-w-full md:max-w-md lg:max-w-lg m-10
+             ml-0 md:ml-auto " // ml-auto pushes it to right on larger screens
 >
   {/* Profile Image + Online Badge */}
   <div className="relative">
     <img
-      src={photoUrl}
+      src={photoUrl ||  `https://ui-avatars.com/api/?name=${firstName}+${lastName}&background=random&size=512`}
       alt={`${firstName} ${lastName}`}
       className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full object-cover"
     />

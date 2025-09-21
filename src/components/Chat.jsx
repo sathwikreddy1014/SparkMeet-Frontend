@@ -96,7 +96,7 @@ const Chat = () => {
   }
 
   return (
-   <div className="flex flex-col h-[680px] w-full md:w-3/5 lg:w-1/3 ml-auto  bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600">
+   <div className="flex flex-col h-screen  w-full md:w-3/5 lg:w-1/3 ml-auto  bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600">
   {/* Chat Header */}
   <div className="bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600 border-b border-gray-200 px-4 py-3 flex items-center justify-between">
     <div className="flex items-center space-x-3">
