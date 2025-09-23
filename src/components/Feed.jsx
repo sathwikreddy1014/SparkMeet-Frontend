@@ -19,19 +19,21 @@ const Feed = () => {
         });
         dispatch(addFeed(res.data?.data));
       } catch (err) {
-        console.error("Failed to fetch feed:", err);
+        console.error("Failed to fetch feed:", err?.response?.data?.message);
       }
     };
 
     if (!feed || feed.length === 0) {
       getFeed();
     }
-  }, [dispatch, feed]);
+  }, []);
 
   if (!feed) return null;
 
   if (!currentUser || !feed || feed.length === 0) {
-  return null; // or a placeholder
+  return (<div className="text-center font-bold text-3xl p-16">
+    Reached the profiles limit
+  </div>); // or a placeholder
 }
 
 const firstFeedUser = feed[0];

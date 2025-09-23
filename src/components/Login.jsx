@@ -45,7 +45,8 @@ const Login = () => {
           { emailId: formData.emailId, password: formData.password },
           { withCredentials: true }
         );
-        dispatch(addUser(res?.data?.data || res?.data));
+        
+        dispatch(addUser(res?.data || res?.data));
         settoast(true)
         setTimeout(() => settoast(false), 3000);
         navigate("/");

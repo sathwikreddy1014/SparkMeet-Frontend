@@ -15,6 +15,7 @@ const Editprofile = ({ user }) => {
   const [gender, setgender] = useState(user.data?.gender || "");
   const [location, setloaction] = useState(user.data?.about || "");
   const [height, setheight] = useState(Number(user.data?.height) || "");
+  const [distancePreference, setdistancePreference] = useState(Number(user.data?.distancePreference) || "");
   const [education, seteducation] = useState(user.data?.education || "");
   const [occupation, setoccupation] = useState(user.data?.occupation || "");
   const [belief, setbelief] = useState(user.data?.belief || "");
@@ -28,6 +29,9 @@ const Editprofile = ({ user }) => {
   const [pets, setpets] = useState(user.data?.pets || "");
   const [toast, settoast] = useState(false);
   const [error, seterror] = useState("");
+const [preferredAgemin, setpreferredAgemin] = useState(user.data?.preferredAgemin || 18);
+const [preferredAgemax, setpreferredAgemax] = useState(user.data?.preferredAgemax || 30);
+
 
   // Multi-select toggle function
   const toggleSelection = (value, state, setState) => {
@@ -52,6 +56,9 @@ const Editprofile = ({ user }) => {
           gender,
           location,
           height,
+          preferredAgemin,
+          preferredAgemax,
+          distancePreference,
           photoUrl,
           education,
           occupation,
@@ -192,6 +199,63 @@ const Editprofile = ({ user }) => {
                     ))}
                   </div>
                 </div>
+{/* Age Preference */}
+<div className="mb-6">
+  <label className="block text-gray-600 dark:text-gray-300 mb-2">
+    Age Preference: 
+    <span className="font-semibold"> {preferredAgemin} - {preferredAgemax} years</span>
+  </label>
+
+  <div className="flex gap-4 items-center">
+    {/* Min Age */}
+    <div className="flex flex-col items-center">
+      <input
+        type="range"
+        min="18"
+        max="60"
+        step="1"
+        value={preferredAgemin}
+        onChange={(e) => setpreferredAgemin(Number(e.target.value))}
+        className="w-32"
+      />
+      <span className="text-sm text-gray-500">{preferredAgemin}</span>
+    </div>
+
+    {/* Max Age */}
+    <div className="flex flex-col items-center">
+      <input
+        type="range"
+        min="18"
+        max="60"
+        step="1"
+        value={preferredAgemax}
+        onChange={(e) => setpreferredAgemax(Number(e.target.value))}
+        className="w-32"
+      />
+      <span className="text-sm text-gray-500">{preferredAgemax}</span>
+    </div>
+  </div>
+</div>
+
+
+{/* Distance Preference */}
+<div>
+  <label className="block text-gray-600 dark:text-gray-300 mb-2">
+    Distance Preference: <span className="font-semibold">{distancePreference} km</span>
+  </label>
+  <input
+    type="range"
+    min="1"
+    max="100"
+    step="1"
+    value={distancePreference}
+    className="w-full"
+    onChange={(e) => setdistancePreference(e.target.value)}
+  />
+</div>
+                
+
+                
 
                 {/* Occupation */}
                 <div className="sm:col-span-2">

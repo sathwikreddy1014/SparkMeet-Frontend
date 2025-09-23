@@ -26,6 +26,7 @@ const Usercard = ({ user }) => {
     sports,
     travelPreferences,
     pets,
+    matchScore
   } = user;
 
   // Match decision handler
@@ -69,14 +70,29 @@ const Usercard = ({ user }) => {
 
     {/* Gradient Overlay */}
     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+{/* Top Info */}
+<div className="absolute top-0 left-0 w-full p-5 flex justify-between items-start">
+  {/* Left side: Name + location */}
+  <div>
+    <h2 className="text-3xl font-bold text-white">
+      {firstName} {lastName && lastName.charAt(0) + "."}, {age}
+    </h2>
+    {location && <p className="text-gray-200 text-sm">{location}</p>}
+  </div>
 
-    {/* Top Info */}
-    <div className="absolute top-0 left-0 w-full p-5">
-      <h2 className="text-3xl font-bold text-white">
-        {firstName} {lastName && lastName.charAt(0) + "."}, {age}
-      </h2>
-      {location && <p className="text-gray-200 text-sm">{location}</p>}
-    </div>
+  {/* Right side: Match Score */}
+{matchScore !== undefined && matchScore >= 6 && (
+  <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-lg">
+    <p className="text-red-400 text-2xl font-semibold">
+      {Math.round((matchScore / 10) * 100)}%
+    </p>
+  </div>
+)}
+
+</div>
+
+
+    
 
     {/* Bottom Info */}
     <div className="absolute bottom-24 left-0 w-full px-5 flex flex-wrap gap-2">
