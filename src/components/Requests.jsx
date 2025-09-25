@@ -7,6 +7,7 @@ import { addRequests, removeRequest } from '../utils/RequestSlice'
 import { Heart, X, MapPin, Clock, ArrowLeft } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import { ApiError } from '../utils/Error';
 
 const Requests = () => {
   const dispatch = useDispatch()
@@ -20,7 +21,7 @@ const Requests = () => {
       await axios.post(url, {}, { withCredentials: true });
       dispatch(removeRequest(_id));
     } catch (error) {
-      console.error("Error requests:", error);
+      throw new ApiError(500, "Error requests:", error)
     }
   };
 
@@ -31,7 +32,7 @@ const Requests = () => {
       });
       dispatch(addRequests(res.data?.data || []));
     } catch (err) {
-      console.error("Error fetching requests:", err);
+      throw new ApiError(500, "Error fetching requests:", err)
     }
   };
 

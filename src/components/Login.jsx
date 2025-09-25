@@ -56,7 +56,6 @@ const Login = () => {
         navigate("/profile");
       }
     } catch (err) {
-      console.error(err?.response?.data?.error);
       setError(`${isLogin ? "LOGIN" : "SIGNUP"} FAILED. PLEASE TRY AGAIN. ${err?.response?.data?.error}`);
     } finally {
       setLoading(false);

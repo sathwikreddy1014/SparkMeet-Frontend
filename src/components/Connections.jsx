@@ -6,6 +6,7 @@ import { addConnections } from "../utils/ConnectionSlice";
 import { motion } from "framer-motion";
 import { MessageCircle, MapPin, Users, ArrowLeft} from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { ApiError } from "../utils/Error";
 
 const Connections = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Connections = () => {
       });
       dispatch(addConnections(res.data.data));
     } catch (error) {
-      console.error("Error fetching connections:", error);
+      throw new ApiError(500,"Error fetching connections:", error )
     }
   };
 
@@ -28,7 +29,6 @@ const Connections = () => {
   }, []);
 
 const handleChatClick = (id ) => {
-  // console.log(firstName);
   navigate(`/room/${id}`); // ✅ correct URL
 };
 

@@ -9,7 +9,6 @@ export const Otpverify = createAsyncThunk(BASE_URL +
       emailId,
       otp,
     }, {withCredentials: true});
-    console.log(response.data);
     return response.data;
   }
 );

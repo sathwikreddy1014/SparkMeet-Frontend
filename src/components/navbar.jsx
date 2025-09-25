@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
+import { ApiError } from "../utils/Error";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Navbar = () => {
       dispatch(removeUser());
       navigate("/login");
     } catch (error) {
-      console.error("Logout failed:", error);
+      throw new ApiError(500, "Logout failed:", error)
     }
   };
 

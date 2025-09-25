@@ -4,6 +4,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { addFeed } from "../utils/feedSlice";
 import Usercard from "./Usercard";
+import { ApiError } from "../utils/Error";
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Feed = () => {
         });
         dispatch(addFeed(res.data?.data));
       } catch (err) {
-        console.error("Failed to fetch feed:", err?.response?.data?.message);
+        throw new ApiError(500, "Failed to fetch feed:", err?.response?.data?.message)
       }
     };
 

@@ -19,7 +19,6 @@ const ForgotPassword = () => {
   try {
     // send OTP
     const res = await sendOtp(emailId);
-    //console.log(res);
     
     alert(res.message)
 
@@ -29,11 +28,11 @@ localStorage.setItem("forgotEmail", emailId);
 localStorage.setItem("resetSession", "true");
 navigate("/verify-reset-code");
 
-    //console.log("OTP sent to:", res.message);
+    
     setemailId("");
   } catch (err) {
     seterror(`${err?.response?.data?.message}`)
-    //console.error("Error:", err?.response?.data?.message);
+  
     //alert(err); // optional
   } finally {
     setLoading(false);

@@ -39,7 +39,7 @@ const VerifyResetCode = () => {
         { withCredentials: true }
       );
 
-      console.log("Verify response:", res.data);
+  
 
       // ✅ save state for refresh
       localStorage.setItem("forgotEmail", activeEmail);
