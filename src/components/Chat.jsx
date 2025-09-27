@@ -4,7 +4,7 @@ import { ArrowLeft, Send, MoreVertical, Phone, Video } from "lucide-react";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useSelector } from "react-redux";
-import { ApiError } from "../utils/Error";
+
 
 const Chat = () => {
   const { id } = useParams(); // other user’s ID from /chat/:id
@@ -43,7 +43,7 @@ const Chat = () => {
 
         setMessages(msgRes.data);
       } catch (error) {
-        throw new ApiError(500, "Error initializing chat:", error)
+        console.error( "Error initializing chat:", error)
       } finally {
         setIsLoading(false);
       }
@@ -70,7 +70,7 @@ const Chat = () => {
       setMessages((prev) => [...prev, res.data]);
       setNewMessage("");
     } catch (error) {
-      throw new ApiError(500,"Error sending message:", error )
+      console.error("Error sending message:", error )
     }
   };
 

@@ -3,7 +3,7 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { removeoneFeed } from "../utils/feedSlice";
 import { Heart, X } from "lucide-react";
-import { ApiError } from "../utils/Error";
+
 
 const Usercard = ({ user }) => {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const Usercard = ({ user }) => {
       );
       dispatch(removeoneFeed(_id));
     } catch (error) {
-      throw new ApiError(500, "error", error.message)
+      console.error("error", error.message)
     }
   };
 

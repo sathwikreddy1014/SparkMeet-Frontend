@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { setForgotEmail } from "../utils/forgotSlice";
-import {  ArrowLeft} from "lucide-react";
+import {  ArrowLeft } from "lucide-react";
 
 const VerifyResetCode = () => {
   const [otp, setOtp] = useState("");
