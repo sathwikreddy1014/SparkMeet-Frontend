@@ -8,8 +8,10 @@ import { useSelector } from "react-redux";
 
 const Chat = () => {
   const { id } = useParams(); // other user’s ID from /chat/:id
+  
   const navigate = useNavigate();
-  const currentUser = useSelector((state) => state.user?.data); // current user from redux
+  const currentUser = useSelector((state) => state.user); 
+  // current user from redux
 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -109,7 +111,7 @@ const Chat = () => {
       </button>
       <div>
         <h2 className="font-semibold text-gray-800">
-          Chat with {id}
+          Chat with 
         </h2>
       </div>
     </div>

@@ -49,7 +49,7 @@ const handleChatClick = (id ) => {
   }
 
   return (
-    <div className="  gap-6 bg-base-200 py-3 px-4 sm:p-5   md:px-10 ">
+    <div className="  gap-6 bg-base-100 py-3 px-4 sm:p-5   md:px-10 ">
        <button
         onClick={() => navigate("/")}
         className="p-2 hover:bg-gray-100 rounded-full"
@@ -84,7 +84,7 @@ const handleChatClick = (id ) => {
   {/* Profile Image + Online Badge */}
   <div className="relative">
     <img
-      src={photoUrl ||  `https://ui-avatars.com/api/?name=${firstName}+${lastName}&background=random&size=512`}
+      src={photoUrl[0] ||  `https://ui-avatars.com/api/?name=${firstName}+${lastName}&background=random&size=512`}
       alt={`${firstName} ${lastName}`}
       className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full object-cover"
     />
