@@ -8,7 +8,7 @@
 // import { useNavigate } from "react-router-dom";
 
   const Editprofile = ({ user }) => {
-    console.log(user);
+    (user);
     
     const dispatch = useDispatch();
     // const navigate = useNavigate()
