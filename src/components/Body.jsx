@@ -11,7 +11,7 @@ const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const userData = useSelector((store) => store.user);
+  const userData = useSelector((store) => store.user?.data);
 
   const publicRoutes = [
     "/login",
@@ -23,10 +23,10 @@ const Body = () => {
   const fetchUser = async () => {
     try {
       if (!userData) {
-        const res = await axios.get(BASE_URL + "/profile/view", {
+        const res = await axios.get(`${BASE_URL}/profile/view`, {
           withCredentials: true,
         });
-        dispatch(addUser(res.data));
+        dispatch(addUser(res.data?.data || res.data));
       }
     } catch (err) {
       if (err.response?.status === 401) {
@@ -41,20 +41,10 @@ const Body = () => {
   };
 
   useEffect(() => {
-  const publicRoutes = [
-    "/login",
-    "/forgot-password",
-    "/verify-reset-code",
-    "/reset-password",
-  ];
-
-  if (publicRoutes.some((path) => location.pathname.startsWith(path))) {
-    return; // ✅ don't fetch user here
-  }
-
-  fetchUser();
-}, [location.pathname]);
-
+    // skip fetching for public routes
+    if (publicRoutes.some((path) => location.pathname.startsWith(path))) return;
+    fetchUser();
+  }, [location.pathname]);
 
   return (
     <>

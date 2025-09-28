@@ -21,7 +21,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [toast, settoast] = useState(false)
+  const [toast, setToast] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,26 +37,34 @@ const Login = () => {
     setLoading(true);
 
     try {
-      let res;
-
       if (isLogin) {
-        res = await axios.post(
+        // 🔑 Login
+        const profileRes = await axios.post(
           `${BASE_URL}/login`,
           { emailId: formData.emailId, password: formData.password },
           { withCredentials: true }
         );
-        
-        dispatch(addUser(res?.data || res?.data));
-        settoast(true)
-        setTimeout(() => settoast(false), 3000);
-        navigate("/");
+        dispatch(addUser(profileRes.data?.data || profileRes.data));
+        setToast("Logged in successfully!");
       } else {
-        res = await axios.post(`${BASE_URL}/signup`, formData, { withCredentials: true });
-        dispatch(addUser(res?.data?.data || res?.data));
-        navigate("/profile");
+        // 📝 Signup
+        await axios.post(`${BASE_URL}/signup`, formData, {
+          withCredentials: true,
+        });
+        setToast("Signed up successfully!");
       }
+
+      // 🎯 Navigate
+      navigate(isLogin ? "/" : "/profile");
+
+      // Hide toast after 3s
+      setTimeout(() => setToast(""), 3000);
     } catch (err) {
-      setError(`${isLogin ? "LOGIN" : "SIGNUP"} FAILED. PLEASE TRY AGAIN. ${err?.response?.data?.error}`);
+      setError(
+        `${isLogin ? "LOGIN" : "SIGNUP"} FAILED. ${
+          err?.response?.data?.error || "Please try again."
+        }`
+      );
     } finally {
       setLoading(false);
     }
@@ -69,6 +77,7 @@ const Login = () => {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md lg:max-w-lg xl:max-w-xl"
       >
+        {/* Header */}
         <div className="text-center mb-6 sm:mb-8 lg:mb-10">
           <motion.div
             initial={{ scale: 0 }}
@@ -81,9 +90,12 @@ const Login = () => {
           <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 sm:mb-4">
             Welcome to SparkMeet
           </h1>
-          <p className="text-white/80 text-sm sm:text-base lg:text-lg">Find your perfect match today</p>
+          <p className="text-white/80 text-sm sm:text-base lg:text-lg">
+            Find your perfect match today
+          </p>
         </div>
 
+        {/* Form Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -93,7 +105,10 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm sm:text-base font-medium text-white mb-2">
+              <label
+                htmlFor="email"
+                className="block text-sm sm:text-base font-medium text-white mb-2"
+              >
                 Email Address
               </label>
               <div className="relative">
@@ -113,7 +128,10 @@ const Login = () => {
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm sm:text-base font-medium text-white mb-2">
+              <label
+                htmlFor="password"
+                className="block text-sm sm:text-base font-medium text-white mb-2"
+              >
                 Password
               </label>
               <div className="relative">
@@ -133,7 +151,11 @@ const Login = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5 sm:w-6 sm:h-6" /> : <Eye className="w-5 h-5 sm:w-6 sm:h-6" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5 sm:w-6 sm:h-6" />
+                  ) : (
+                    <Eye className="w-5 h-5 sm:w-6 sm:h-6" />
+                  )}
                 </button>
               </div>
             </div>
@@ -142,7 +164,9 @@ const Login = () => {
             {!isLogin && (
               <>
                 <div>
-                  <label className="block text-sm sm:text-base font-medium text-white mb-2">First Name</label>
+                  <label className="block text-sm sm:text-base font-medium text-white mb-2">
+                    First Name
+                  </label>
                   <input
                     type="text"
                     name="firstName"
@@ -155,7 +179,9 @@ const Login = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm sm:text-base font-medium text-white mb-2">Last Name</label>
+                  <label className="block text-sm sm:text-base font-medium text-white mb-2">
+                    Last Name
+                  </label>
                   <input
                     type="text"
                     name="lastName"
@@ -168,7 +194,9 @@ const Login = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm sm:text-base font-medium text-white mb-2">Age</label>
+                  <label className="block text-sm sm:text-base font-medium text-white mb-2">
+                    Age
+                  </label>
                   <input
                     type="number"
                     name="age"
@@ -179,8 +207,11 @@ const Login = () => {
                     required
                   />
                 </div>
+
                 <div>
-                  <label className="block text-sm sm:text-base font-medium text-white mb-2">Gender</label>
+                  <label className="block text-sm sm:text-base font-medium text-white mb-2">
+                    Gender
+                  </label>
                   <select
                     name="gender"
                     value={formData.gender}
@@ -188,7 +219,7 @@ const Login = () => {
                     className="w-full pl-3 pr-3 py-2 rounded-xl bg-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50"
                     required
                   >
-                    <option value="" className="bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600">Select gender</option>
+                    <option value="">Select gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
@@ -203,10 +234,18 @@ const Login = () => {
               disabled={loading}
               className="w-full bg-white text-purple-600 py-3 sm:py-4 px-4 rounded-xl font-semibold hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base lg:text-lg"
             >
-              {loading ? (isLogin ? "Signing in..." : "Signing up...") : isLogin ? "Sign In" : "Sign Up"}
+              {loading
+                ? isLogin
+                  ? "Signing in..."
+                  : "Signing up..."
+                : isLogin
+                ? "Sign In"
+                : "Sign Up"}
             </button>
 
-            {error && <p className="text-red-500 text-center text-sm mt-2">{error}</p>}
+            {error && (
+              <p className="text-red-500 text-center text-sm mt-2">{error}</p>
+            )}
           </form>
 
           {/* Forgot password */}
@@ -233,16 +272,17 @@ const Login = () => {
             </span>
           </div>
         </motion.div>
+
+        {/* Toast */}
         {toast && (
-        <div className="toast toast-top toast-center py-20">
-          <div className="alert alert-success">
-            <span>Profile Updated Successfully.</span>
+          <div className="toast toast-top toast-center py-20">
+            <div className="alert alert-success">
+              <span>{toast}</span>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </motion.div>
     </div>
-    
   );
 };
 

@@ -4,11 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
 
-
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userData = useSelector((store) => store.user?.data);
+  const userData = useSelector((store) => store.user);
+  // console.log(userData);
   
 
   const handleLogout = async () => {
@@ -17,12 +17,18 @@ const Navbar = () => {
       dispatch(removeUser());
       navigate("/login");
     } catch (error) {
-      console.error( "Logout failed:", error)
+      console.error("Logout failed:", error);
     }
   };
 
+  const avatarUrl =
+    Array.isArray(userData?.photoUrl) && userData.photoUrl.length
+      ? userData.photoUrl[0]
+      : "/default-avatar.png";
+
+  // ✅ Show navbar even if user not loaded, just without user info
   return (
-    <div className="navbar  shadow-lg justify-between px-4 bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600 ">
+    <div className="navbar shadow-lg justify-between px-4 bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600">
       {/* Left: Logo + Name */}
       <div className="flex items-center gap-2">
         <img
@@ -30,26 +36,23 @@ const Navbar = () => {
           alt="logo"
           className="w-10 h-10 rounded-full shadow-lg"
         />
-        <Link to="/" className="text-xl font-bold">
+        <Link to="/" className="text-xl font-bold text-white">
           Spark Meet
         </Link>
       </div>
 
-      {/* Right: Avatar Dropdown */}
-      {userData && (
+      {/* Right: User Dropdown (only if logged in) */}
+      {userData ? (
         <div className="flex items-center">
-          <div className="px-2">Welcome, {userData?.firstName}</div>
-          <div className="dropdown dropdown-end mx-8">
+          <div className="px-2 text-white">Welcome, {userData.firstName}</div>
+          <div className="dropdown dropdown-end mx-4">
             <div
               tabIndex={0}
               role="button"
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img
-                  alt="user photo"
-                  src={userData?.photoUrl || "/default-avatar.png"}
-                />
+                <img alt="user photo" src={avatarUrl} />
               </div>
             </div>
             <ul
@@ -70,6 +73,15 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
+        </div>
+      ) : (
+        <div>
+          <Link
+            to="/login"
+            className="btn btn-sm bg-white text-purple-600 font-semibold hover:bg-gray-200"
+          >
+            Logout
+          </Link>
         </div>
       )}
     </div>
