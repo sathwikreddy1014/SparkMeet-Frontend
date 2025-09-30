@@ -27,7 +27,7 @@ const Chat = () => {
 
         // Step 1: Create or get chat room
         const roomRes = await axios.post(
-  `${BASE_URL}/room`,
+  `${BASE_URL}/api/chat/room`,
   { userId: id },
   { withCredentials: true }
 );
@@ -38,7 +38,7 @@ const Chat = () => {
 
         // Step 2: Fetch chat messages
         const msgRes = await axios.get(
-  `${BASE_URL}/messages/${roomRes.data._id}`,
+  `${BASE_URL}/api/chat/messages/${roomRes.data._id}`,
   { withCredentials: true }
 );
 
@@ -64,10 +64,11 @@ const Chat = () => {
 
     try {
       const res = await axios.post(
-        `${BASE_URL}/message`,
+        `${BASE_URL}/api/chat/message`,
         { roomId, text: newMessage },
         { withCredentials: true }
       );
+
 
       setMessages((prev) => [...prev, res.data]);
       setNewMessage("");
@@ -104,7 +105,7 @@ const Chat = () => {
   <div className="bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600 border-b border-gray-200 px-4 py-3 flex items-center justify-between">
     <div className="flex items-center space-x-3">
       <button
-        onClick={() => navigate("/user/connections")}
+        onClick={() => navigate("/api/user/connections")}
         className="p-2 hover:bg-gray-100 rounded-full"
       >
         <ArrowLeft className="w-5 h-5 text-gray-600" />

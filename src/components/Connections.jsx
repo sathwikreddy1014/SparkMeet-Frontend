@@ -14,7 +14,7 @@ const Connections = () => {
 
   const fetchConnections = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/user/connections", {
+      const res = await axios.get(BASE_URL + "/api/user/connections", {
         withCredentials: true,
       });
       dispatch(addConnections(res.data.data));
@@ -28,7 +28,7 @@ const Connections = () => {
   }, []);
 
 const handleChatClick = (id ) => {
-  navigate(`/room/${id}`); // ✅ correct URL
+  navigate(`/api/chat/room/${id}`); // ✅ correct URL
 };
 
 

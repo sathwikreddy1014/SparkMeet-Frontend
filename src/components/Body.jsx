@@ -23,7 +23,7 @@ const Body = () => {
   const fetchUser = async () => {
     try {
       if (!userData) {
-        const res = await axios.get(`${BASE_URL}/profile/view`, {
+        const res = await axios.get(`${BASE_URL}/api/profile/view`, {
           withCredentials: true,
         });
         dispatch(addUser(res.data?.data || res.data));
@@ -32,7 +32,7 @@ const Body = () => {
       if (err.response?.status === 401) {
         // ✅ only redirect if not on a public route
         if (!publicRoutes.includes(location.pathname)) {
-          navigate("/login");
+          navigate("/api/auth/login");
         }
       } else {
         navigate("/errorpage");

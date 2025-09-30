@@ -9,7 +9,7 @@ import { Heart, Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    emailId: "@gmail.com",
+    emailId: "thala@gmail.com",
     password: "Qwerty@123",
     firstName: "",
     lastName: "",
@@ -40,7 +40,7 @@ const Login = () => {
       if (isLogin) {
         // 🔑 Login
         const profileRes = await axios.post(
-          `${BASE_URL}/login`,
+          `${BASE_URL}/api/auth/login`,
           { emailId: formData.emailId, password: formData.password },
           { withCredentials: true }
         );
@@ -48,14 +48,14 @@ const Login = () => {
         setToast("Logged in successfully!");
       } else {
         // 📝 Signup
-        await axios.post(`${BASE_URL}/signup`, formData, {
+        await axios.post(`${BASE_URL}/api/auth/signup`, formData, {
           withCredentials: true,
         });
         setToast("Signed up successfully!");
       }
 
       // 🎯 Navigate
-      navigate(isLogin ? "/" : "/profile");
+      navigate(isLogin ? "/" : "/api/profile/edit");
 
       // Hide toast after 3s
       setTimeout(() => setToast(""), 3000);

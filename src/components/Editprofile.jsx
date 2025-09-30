@@ -75,7 +75,7 @@
         formData.append("images", file);
 
         try {
-          const res = await axios.patch(`${BASE_URL}/profile/edit`, formData, {
+          const res = await axios.patch(`${BASE_URL}/api/profile/edit`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true,
           });
@@ -103,7 +103,7 @@
       }
 
       try {
-        const res = await axios.delete(`${BASE_URL}/profile/photo`, {
+        const res = await axios.delete(`${BASE_URL}/api/profile/photo`, {
           data: { url },
           withCredentials: true,
         });
@@ -126,7 +126,7 @@ const saveProfile = async (e) => {
   e.preventDefault();
   setError("");
   try {
-    const res = await axios.patch(`${BASE_URL}/profile/edit`, profileData, {
+    const res = await axios.patch(`${BASE_URL}/api/profile/edit`, profileData, {
       withCredentials: true,
     });
 

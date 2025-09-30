@@ -50,7 +50,7 @@ const Usercard = ({ user }) => {
   // Match decision
   const reviewMatch = async (status, userId) => {
     try {
-      await axios.post(`${BASE_URL}/request/send/${status}/${userId}`, {}, { withCredentials: true });
+      await axios.post(`${BASE_URL}/api/request/send/${status}/${userId}`, {}, { withCredentials: true });
       dispatch(removeoneFeed(_id));
     } catch (error) {
       console.error("error", error.message);
