@@ -40,7 +40,7 @@ const Login = () => {
       if (isLogin) {
         // 🔑 Login
         const profileRes = await axios.post(
-          `${BASE_URL}/api/auth/login`,
+          `${BASE_URL}api/auth/login`,
           { emailId: formData.emailId, password: formData.password },
           { withCredentials: true }
         );
@@ -48,7 +48,7 @@ const Login = () => {
         setToast("Logged in successfully!");
       } else {
         // 📝 Signup
-        await axios.post(`${BASE_URL}/api/auth/signup`, formData, {
+        await axios.post(`${BASE_URL}api/auth/signup`, formData, {
           withCredentials: true,
         });
         setToast("Signed up successfully!");

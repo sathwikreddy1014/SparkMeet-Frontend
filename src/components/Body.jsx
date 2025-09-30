@@ -14,16 +14,16 @@ const Body = () => {
   const userData = useSelector((store) => store.user?.data);
 
   const publicRoutes = [
-    "/login",
-    "/forgot-password",
-    "/verify-reset-code",
-    "/reset-password",
+    "api/authlogin",
+    "api/profile/forgot-password",
+    "api/profile/verify-reset-code",
+    "api/profile/reset-password",
   ];
 
   const fetchUser = async () => {
     try {
       if (!userData) {
-        const res = await axios.get(`${BASE_URL}/api/profile/view`, {
+        const res = await axios.get(`${BASE_URL}api/profile/view`, {
           withCredentials: true,
         });
         dispatch(addUser(res.data?.data || res.data));
@@ -32,7 +32,7 @@ const Body = () => {
       if (err.response?.status === 401) {
         // ✅ only redirect if not on a public route
         if (!publicRoutes.includes(location.pathname)) {
-          navigate("/api/auth/login");
+          navigate("api/auth/login");
         }
       } else {
         navigate("/errorpage");

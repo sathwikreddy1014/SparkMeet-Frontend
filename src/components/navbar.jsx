@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
+import logo from './assets/logo.jpg';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const Navbar = () => {
       {/* Left: Logo + Name */}
       <div className="flex items-center gap-2">
         <img
-          src="/logo.jpg"
+          src={logo}
           alt="logo"
           className="w-10 h-10 rounded-full shadow-lg"
         />
