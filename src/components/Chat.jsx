@@ -105,7 +105,7 @@ const Chat = () => {
   <div className="bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600 border-b border-gray-200 px-4 py-3 flex items-center justify-between">
     <div className="flex items-center space-x-3">
       <button
-        onClick={() => navigate("/api/user/connections")}
+        onClick={() => navigate("/connections")}
         className="p-2 hover:bg-gray-100 rounded-full"
       >
         <ArrowLeft className="w-5 h-5 text-gray-600" />

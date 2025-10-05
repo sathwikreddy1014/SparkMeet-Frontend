@@ -4,11 +4,12 @@ import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearForgotEmail } from "../utils/forgotSlice";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 
 const NewPassword = () => {
-  const [newPassword, setnewPassword] = useState("");
-  const [error, seterror] = useState("")
+  const [newPassword, setNewPassword] = useState("");
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -16,10 +17,9 @@ const NewPassword = () => {
     e.preventDefault();
 
     try {
-      // const emailId = localStorage.getItem("forgotEmail");
       await axios.post(
-        BASE_URL + "/reset-password",
-        { newPassword},
+        BASE_URL + "/api/profile/reset-password",
+        { newPassword },
         { withCredentials: true }
       );
 
@@ -31,14 +31,14 @@ const NewPassword = () => {
       alert("Password reset successful. Please log in.");
       navigate("/login");
     } catch (err) {
-      seterror(`Reset error: ${err.response?.data?.message} `);
+      setError(`Reset error: ${err.response?.data?.message || ""}`);
       alert(err.response?.data?.message || "Password reset failed");
       navigate("/login");
     }
   };
 
   return (
-     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-neutral-900 to-neutral-800 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-neutral-900 to-neutral-800 px-4">
       <div className="relative w-full max-w-md bg-neutral-900/90 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-neutral-700">
         
         {/* Back button */}
@@ -56,14 +56,29 @@ const NewPassword = () => {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
-          <input
-            type="password"
-            placeholder="Enter new password"
-            value={newPassword}
-            onChange={(e) => setnewPassword(e.target.value)}
-            required
-            className="w-full px-4 py-3 rounded-lg border border-neutral-700 bg-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter new password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+              className="w-full px-4 py-3 rounded-lg border border-neutral-700 bg-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+            />
+
+            {/* Eye icon toggle */}
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white"
+            >
+              {showPassword ? (
+                <EyeOff className="w-5 h-5 sm:w-6 sm:h-6" />
+              ) : (
+                <Eye className="w-5 h-5 sm:w-6 sm:h-6" />
+              )}
+            </button>
+          </div>
 
           {error && (
             <p className="text-red-500 text-center text-sm mt-2">{error}</p>

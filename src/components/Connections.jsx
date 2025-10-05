@@ -28,7 +28,7 @@ const Connections = () => {
   }, []);
 
 const handleChatClick = (id ) => {
-  navigate(`/api/chat/room/${id}`); // ✅ correct URL
+  navigate(`/room/${id}`); // ✅ correct URL
 };
 
 

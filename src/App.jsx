@@ -21,10 +21,10 @@ export default function App() {
       <BrowserRouter basename="/">
         <Routes>
           {/* 🔓 Public routes (no Body wrapper) */}
-          <Route path="/api/auth/login" element={<Login />} />
-          <Route path="/api/profile/forgot-password" element={<ForgotPassword />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
-            path="/api/profile/verify-reset-code"
+            path="/verify-reset-code"
             element={
               <ResetRoute>
                 <VerifyResetCode />
@@ -32,7 +32,7 @@ export default function App() {
             }
           />
           <Route
-            path="/api/profile/reset-password"
+            path="/reset-password"
             element={
               <ResetRoute>
                 <NewPassword />
@@ -44,10 +44,10 @@ export default function App() {
           {/* 🔒 Private routes (with Body wrapper) */}
           <Route path="/" element={<Body />}>
             <Route index element={<Feed />} />
-            <Route path="/api/profile/edit" element={<Profile />} />
-            <Route path="/api/user/connections" element={<Connections />} />
-            <Route path="/api/request/review" element={<Requests/>} />
-            <Route path="/api/chat/room/:id" element={<Chat />} />
+            <Route path="/edit" element={<Profile />} />
+            <Route path="/connections" element={<Connections />} />
+            <Route path="/request/review" element={<Requests/>} />
+            <Route path="/room/:id" element={<Chat />} />
           </Route>
         </Routes>
       </BrowserRouter>

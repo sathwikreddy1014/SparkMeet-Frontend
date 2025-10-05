@@ -14,9 +14,9 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${BASE_URL}/api/auth/logout`, {}, { withCredentials: true });
+      await axios.post(BASE_URL+"/api/auth/logout", {}, { withCredentials: true });
       dispatch(removeUser());
-      navigate("/api/auth/login");
+      navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -61,13 +61,13 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link to="/api/profile/view">Profile</Link>
+                <Link to="/edit">Profile</Link>
               </li>
               <li>
-                <Link to="api/user/connections">Connections</Link>
+                <Link to="/connections">Connections</Link>
               </li>
               <li>
-                <Link to="api/request/review/">Requests</Link>
+                <Link to="/request/review/">Requests</Link>
               </li>
               <li>
                 <button onClick={handleLogout}>Logout</button>

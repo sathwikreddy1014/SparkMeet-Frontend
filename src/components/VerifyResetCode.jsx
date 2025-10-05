@@ -33,8 +33,8 @@ const VerifyResetCode = () => {
         return;
       }
 
-      const res = await axios.post(
-        BASE_URL + "/verify-reset-code",
+      await axios.post(
+        BASE_URL + "/api/profile/verify-reset-code",
         { emailId: activeEmail, otp },
         { withCredentials: true }
       );

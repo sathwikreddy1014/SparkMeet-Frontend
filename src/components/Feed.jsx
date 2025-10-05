@@ -15,9 +15,11 @@ const Feed = () => {
   useEffect(() => {
     const getFeed = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}api/user/feed`, {
+        const res = await axios.get(`${BASE_URL}/api/user/feed`, {
           withCredentials: true,
         });
+       
+        
         dispatch(addFeed(res.data?.data));
       } catch (err) {
         console.error("Failed to fetch feed:", err?.response?.data?.message)
