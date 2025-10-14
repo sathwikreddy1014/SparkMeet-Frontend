@@ -18,7 +18,7 @@ const NewPassword = () => {
 
     try {
       await axios.post(
-        BASE_URL + "/api/profile/reset-password",
+        BASE_URL + "/reset-password",
         { newPassword },
         { withCredentials: true }
       );

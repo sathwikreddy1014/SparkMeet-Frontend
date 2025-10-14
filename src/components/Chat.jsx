@@ -27,7 +27,7 @@ const Chat = () => {
 
         // Step 1: Create or get chat room
         const roomRes = await axios.post(
-  `${BASE_URL}/api/chat/room`,
+  `${BASE_URL}/room`,
   { userId: id },
   { withCredentials: true }
 );
