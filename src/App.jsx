@@ -4,7 +4,6 @@ import Login from "./components/Login";
 import { Provider } from "react-redux";
 import appStore from "./utils/appstore";
 import Feed from "./components/Feed";
-import ErrorPage from "./components/ErrorPage";
 import Profile from "./components/Profile";
 
 import VerifyResetCode from "./components/VerifyResetCode";
@@ -39,7 +38,6 @@ export default function App() {
               </ResetRoute>
             }
           />
-          <Route path="/errorpage" element={<ErrorPage />} />
 
           {/* 🔒 Private routes (with Body wrapper) */}
           <Route path="/" element={<Body />}>

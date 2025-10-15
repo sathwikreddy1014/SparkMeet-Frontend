@@ -35,7 +35,7 @@ const Body = () => {
           navigate("/login");
         }
       } else {
-        navigate("/errorpage");
+        navigate("/login");
       }
     }
   };
