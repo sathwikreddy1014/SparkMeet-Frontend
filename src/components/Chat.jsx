@@ -38,7 +38,7 @@ const Chat = () => {
 
         // Step 2: Fetch chat messages
         const msgRes = await axios.get(
-  `${BASE_URL}/api/chat/messages/${roomRes.data._id}`,
+  `${BASE_URL}/messages/${roomRes.data._id}`,
   { withCredentials: true }
 );
 
@@ -64,7 +64,7 @@ const Chat = () => {
 
     try {
       const res = await axios.post(
-        `${BASE_URL}/api/chat/message`,
+        `${BASE_URL}/message`,
         { roomId, text: newMessage },
         { withCredentials: true }
       );

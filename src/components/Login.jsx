@@ -9,8 +9,8 @@ import { Heart, Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    emailId: "thala@gmail.com",
-    password: "Qwerty@123",
+    emailId: "",
+    password: "",
     firstName: "",
     lastName: "",
     age: "",

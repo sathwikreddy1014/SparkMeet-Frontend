@@ -44,8 +44,8 @@ const Requests = () => {
         >
           <ArrowLeft className="w-5 h-5 text-gray-600" />
         </button>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">No requests yet</h2>
-        <p className="text-gray-600">When someone likes your profile, they'll appear here</p>
+        <h2 className="text-2xl font-bold text-white mb-2">No requests yet</h2>
+        <p className="text-gray-400">When someone likes your profile, they'll appear here</p>
       </div>
     );
   }
