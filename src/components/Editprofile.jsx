@@ -5,13 +5,13 @@
   import { addUser } from "../utils/userSlice";
   import { BASE_URL } from "../utils/constants";
   import Usercard from "./Usercard"
+import {  useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 
   const Editprofile = ({ user }) => {
-    (user);
     
     const dispatch = useDispatch();
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     // State for all profile fields
     const [profileData, setProfileData] = useState({
       firstName: user?.firstName || "",
@@ -146,6 +146,7 @@ const saveProfile = async (e) => {
     dispatch(addUser(updatedUser)); // now safe for Navbar
     setToast(true);
     setTimeout(() => setToast(false), 3000);
+    navigate('/')
   } catch (err) {
     setError(err.message);
   }

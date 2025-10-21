@@ -63,8 +63,8 @@ const Login = () => {
       setTimeout(() => setToast(""), 3000);
     } catch (err) {
       setError(
-        `${isLogin ? "LOGIN" : "SIGNUP"} FAILED. ${
-          err?.response?.data?.error || "Please try again."
+        `${isLogin ? "Login" : "Signup"} FAILED. ${
+          err?.response?.data.message || "Please try again."
         }`
       );
     } finally {
@@ -247,8 +247,10 @@ const Login = () => {
 
             {error && (
               <p className="text-red-500 text-center text-sm mt-2">{error}</p>
-            )}
+            )}        
           </form>
+  
+          
 
           {/* Forgot password */}
           <div className="mt-4 sm:mt-6 text-center">
