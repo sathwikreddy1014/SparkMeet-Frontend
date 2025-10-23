@@ -5,12 +5,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../utils/constants";
 import { motion } from "framer-motion";
-import { Heart, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Heart, Mail, Lock, Eye, EyeOff, CircleDot } from "lucide-react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    emailId: "",
-    password: "",
+    emailId: "thala@gmail.com",
+    password: "Qwerty@123",
     firstName: "",
     lastName: "",
     age: "",
@@ -275,6 +275,26 @@ const Login = () => {
               </button>
             </span>
           </div>
+          <div className="flex flex-col sm:flex-row justify-center items-center text-sm text-white mt-6 space-y-2 sm:space-y-0 sm:space-x-6">
+  <Link
+    to="/terms-and-conditions"
+    className="flex items-center hover:text-black transition-colors duration-200"
+  >
+    <CircleDot size={14} className="mr-3 text-black " />
+    Terms & Conditions
+  </Link>
+
+  <span className="hidden sm:block text-black">|</span>
+
+  <Link
+    to="/privacy-policy"
+    className="flex items-center  hover:text-black transition-colors duration-200"
+  >
+    <CircleDot size={14} className="mr-3 text-black" />
+    Privacy Policy
+  </Link>
+</div>
+
         </motion.div>
 
         {/* Toast */}

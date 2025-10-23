@@ -1,7 +1,6 @@
-import { Outlet, useNavigate, useLocation } from 'react-router-dom'
-import Navbar from './navbar'
-import Footer from './Footer'
-import axios from 'axios'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import Navbar from './navbar';
+import axios from 'axios';
 import { BASE_URL } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../utils/userSlice';
@@ -30,7 +29,6 @@ const Body = () => {
       }
     } catch (err) {
       if (err.response?.status === 401) {
-        // ✅ only redirect if not on a public route
         if (!publicRoutes.includes(location.pathname)) {
           navigate("/login");
         }
@@ -41,17 +39,22 @@ const Body = () => {
   };
 
   useEffect(() => {
-    // skip fetching for public routes
     if (publicRoutes.some((path) => location.pathname.startsWith(path))) return;
     fetchUser();
   }, [location.pathname]);
 
   return (
-    <>
-      <Navbar />
-      <Outlet />
-      <Footer />
-    </>
+    <div className="h-screen overflow-hidden flex flex-col bg-gray-50">
+      {/* Fixed Navbar */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <Navbar />
+      </div>
+
+      {/* Static (non-scrollable) Outlet */}
+      <main className="flex-grow mt-[64px] flex justify-center items-center">
+        <Outlet />
+      </main>
+    </div>
   );
 };
 

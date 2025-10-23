@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeoneFeed } from "../utils/feedSlice";
-import { Heart, X } from "lucide-react";
 import { useSwipeable } from "react-swipeable";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
@@ -34,30 +33,20 @@ const Usercard = ({ user }) => {
 
   // Swipe handlers
   const handlers = useSwipeable({
-    onSwipedLeft: () => nextImage(),
-    onSwipedRight: () => prevImage(),
+    onSwipedLeft: () => reviewMatch("pass", _id),
+    onSwipedRight: () => reviewMatch("like", _id),
     trackMouse: true,
   });
 
-  const nextImage = () => {
-    setCurrentImage((prev) => (prev + 1) % photoUrl.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImage((prev) => (prev === 0 ? photoUrl.length - 1 : prev - 1));
-  };
-
-  // Match decision
   const reviewMatch = async (status, userId) => {
     try {
       await axios.post(`${BASE_URL}/send/${status}/${userId}`, {}, { withCredentials: true });
       dispatch(removeoneFeed(_id));
     } catch (error) {
-      console.error("error", error.message);
+      console.error(error.message);
     }
   };
 
-  // Chip renderer
   const chip = (text, color, key) => (
     <span key={key} className={`text-white text-xs sm:text-sm px-3 py-1 rounded-full ${color}`}>
       {text}
@@ -65,17 +54,17 @@ const Usercard = ({ user }) => {
   );
 
   return (
-    <div className="relative w-full max-w-md md:max-w-lg mx-auto rounded-3xl overflow-hidden shadow-2xl">
+    <div className="relative w-full max-w-md md:max-w-lg mx-auto rounded-xl shadow-2xl overflow-hidden">
       <figure
-        className="w-full h-[calc(100vh-4rem)] relative"
-        {...handlers} // Attach swipe handlers here
+        className="w-full h-[calc(100vh-4rem)] relative rounded-xl cursor-grab"
+        {...handlers}
       >
         {/* Photos */}
         {photoUrl.length > 0 ? (
           <img
             src={photoUrl[currentImage]}
             alt={`userPhoto-${currentImage}`}
-            className="w-full h-full object-cover transition-all duration-500"
+            className="w-full h-full object-cover transition-transform duration-500"
           />
         ) : (
           <img
@@ -85,7 +74,7 @@ const Usercard = ({ user }) => {
           />
         )}
 
-        {/* Gradient overlay */}
+        {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
 
         {/* Top Info */}
@@ -106,8 +95,8 @@ const Usercard = ({ user }) => {
           )}
         </div>
 
-        {/* Bottom Info */}
-        <div className="absolute bottom-24 left-0 w-full px-5 flex flex-wrap gap-2">
+        {/* Bottom Info Chips */}
+        <div className="absolute bottom-20 left-0 w-full px-5 flex flex-wrap gap-2">
           {education && chip(education, "bg-purple-600/70", "edu")}
           {occupation && chip(occupation, "bg-purple-600/70", "occ")}
           {height && chip(height, "bg-blue-600/70", "height")}
@@ -120,22 +109,6 @@ const Usercard = ({ user }) => {
           {sports?.map((s, i) => chip(s, "bg-orange-600/70", `sport-${i}`))}
           {travelPreferences?.map((t, i) => chip(t, "bg-yellow-600/70", `travel-${i}`))}
           {languages?.map((l, i) => chip(l, "bg-teal-600/70", `lang-${i}`))}
-        </div>
-
-        {/* Action Buttons */}
-        <div className="absolute bottom-5 left-0 w-full flex justify-around px-8">
-          <button
-            className="bg-red-500 hover:bg-red-600 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-3xl transition-transform hover:scale-110"
-            onClick={() => reviewMatch("pass", _id)}
-          >
-            <X size={36} />
-          </button>
-          <button
-            className="bg-green-500 hover:bg-green-600 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-3xl transition-transform hover:scale-110"
-            onClick={() => reviewMatch("like", _id)}
-          >
-            <Heart size={36} />
-          </button>
         </div>
       </figure>
     </div>
