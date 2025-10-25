@@ -70,6 +70,9 @@ const Navbar = () => {
                 <Link to="/request/review/">Requests</Link>
               </li>
               <li>
+                <Link to="/premiunplans">Premium</Link>
+              </li>
+              <li>
                 <button onClick={handleLogout}>Logout</button>
               </li>
             </ul>

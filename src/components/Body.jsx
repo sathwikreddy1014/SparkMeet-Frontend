@@ -44,14 +44,14 @@ const Body = () => {
   }, [location.pathname]);
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col bg-gray-50">
+    <div className="flex flex-col min-h-screen bg-gray-400">
       {/* Fixed Navbar */}
       <div className="fixed top-0 left-0 right-0 z-50">
         <Navbar />
       </div>
 
-      {/* Static (non-scrollable) Outlet */}
-      <main className="flex-grow mt-[64px] flex justify-center items-center">
+      {/* Centered Scrollable Outlet Content */}
+      <main className="flex-grow mt-[64px] overflow-y-auto flex justify-center items-center">
         <Outlet />
       </main>
     </div>

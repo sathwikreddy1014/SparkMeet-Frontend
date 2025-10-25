@@ -15,6 +15,7 @@ import Requests from "./components/Requests";
 import Chat from "./components/Chat";
 import TermsAndConditions from "./components/PrivacyPolicy";
 import PrivacyPolicy from "./components/PrivacyPolicy";
+import PremiumPlans from "./components/PremiumPlans";
 
 export default function App() {
   return (
@@ -59,7 +60,8 @@ export default function App() {
             <Route path="/connections" element={<Connections />} />
             <Route path="/request/review" element={<Requests/>} />
             <Route path="/room/:id" element={<Chat />} />
-          </Route>
+            <Route path = "/premiunplans" element= {<PremiumPlans/>}/>
+          </Route> 
         </Routes>
       </BrowserRouter>
     </Provider>
