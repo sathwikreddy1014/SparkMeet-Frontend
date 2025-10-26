@@ -1,5 +1,7 @@
+import axios from "axios";
 import React from "react";
 import { FaCrown, FaStar, FaCheck, FaTimes } from "react-icons/fa";
+import { BASE_URL } from "../utils/constants";
 
 const PremiumPlans = () => {
   const comparisonData = [
@@ -15,6 +17,36 @@ const PremiumPlans = () => {
     { feature: "Cross-Region Discovery", aurora: false, nova: true },
     { feature: "Super Likes", aurora: false, nova: true },
   ];
+
+  const handlePlam = async (type) => {
+    const order = await axios.post(BASE_URL + "/payment/create", {
+      membershipType: type
+    },{
+      withCredentials:true 
+    })
+
+    const {amount, keyId, currency, notes, orderId} = order.data
+
+     const options = {
+        key: keyId, 
+        amount, 
+        currency,
+        name: 'SparkMeet',
+        description: 'Test Transaction',
+        order_id: orderId, 
+        prefill: {
+          name: notes.firstName + " " + notes.lastName,
+          email: notes.emailId,
+          contact: '9999999999'
+        },
+        theme: {
+          color: '#F37254'
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+  }
 
   return (
     <div className="min-h-screen bg-gray-400 flex flex-col items-center py-16 px-6">
@@ -40,7 +72,7 @@ const PremiumPlans = () => {
             Smarter matches, better visibility, and ad-free chatting for your daily social life.
           </p>
           <div className="text-4xl font-extrabold text-blue-500 mb-4">₹199<span className="text-lg font-medium text-gray-600">/month</span></div>
-          <button onClick={handlePremium("Aurora")} className="w-full bg-blue-500 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition">
+          <button onClick = {() => handlePlam('silver')} className="w-full bg-blue-500 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition">
             Choose Aurora
           </button>
         </div>
@@ -58,7 +90,7 @@ const PremiumPlans = () => {
             Unlock every premium feature — AI companion, global discovery, and unmatched control.
           </p>
           <div className="text-4xl font-extrabold text-yellow-800 mb-4">₹499<span className="text-lg font-medium text-gray-700">/month</span></div>
-          <button className="w-full bg-yellow-700 text-white py-3 rounded-xl font-semibold hover:bg-yellow-800 transition">
+          <button onClick = {() => handlePlam('gold')} className="w-full bg-yellow-700 text-white py-3 rounded-xl font-semibold hover:bg-yellow-800 transition">
             Choose Nova Elite
           </button>
         </div>
