@@ -1,9 +1,71 @@
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import React from "react";
 import { FaCrown, FaStar, FaCheck, FaTimes } from "react-icons/fa";
 import { BASE_URL } from "../utils/constants";
 
 const PremiumPlans = () => {
+  const [isUserPremium, setIsUserPremium] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    verifyPremiumUser();
+  }, []);
+
+  // ✅ Verify if the user is already premium
+  const verifyPremiumUser = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/premium/verify`, {
+        withCredentials: true,
+      });
+      setIsUserPremium(res.data.isPremium);
+    } catch (err) {
+      console.error("Error verifying premium user:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ✅ Handle payment plan selection
+  const handlePlan = async (type) => {
+    try {
+      const orderRes = await axios.post(
+        `${BASE_URL}/payment/create`,
+        { membershipType: type },
+        { withCredentials: true }
+      );
+
+      const { amount, keyId, currency, notes, orderId } = orderRes.data;
+
+      const options = {
+        key: keyId,
+        amount,
+        currency,
+        name: "SparkMeet",
+        description: `${type} Membership`,
+        order_id: orderId,
+        prefill: {
+          name: `${notes.firstName} ${notes.lastName}`,
+          email: notes.emailId,
+          contact: "9999999999",
+        },
+        theme: { color: "#F37254" },
+
+        // ✅ Payment success handler
+        handler: async function (response) {
+          alert("✅ Payment successful!");
+          console.log("Razorpay response:", response);
+          await verifyPremiumUser();
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      console.error("❌ Payment failed:", err);
+      alert("Payment initiation failed. Please try again.");
+    }
+  };
+
   const comparisonData = [
     { feature: "Unlimited Chats", aurora: true, nova: true },
     { feature: "AI Smart Matches", aurora: true, nova: true },
@@ -18,36 +80,19 @@ const PremiumPlans = () => {
     { feature: "Super Likes", aurora: false, nova: true },
   ];
 
-  const handlePlam = async (type) => {
-    const order = await axios.post(BASE_URL + "/payment/create", {
-      membershipType: type
-    },{
-      withCredentials:true 
-    })
+  // ✅ Loading state
+  if (loading) return <div className="text-center py-20 text-white">Loading...</div>;
 
-    const {amount, keyId, currency, notes, orderId} = order.data
-
-     const options = {
-        key: keyId, 
-        amount, 
-        currency,
-        name: 'SparkMeet',
-        description: 'Test Transaction',
-        order_id: orderId, 
-        prefill: {
-          name: notes.firstName + " " + notes.lastName,
-          email: notes.emailId,
-          contact: '9999999999'
-        },
-        theme: {
-          color: '#F37254'
-        },
-      };
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
+  // ✅ Already Premium
+  if (isUserPremium) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-3xl text-yellow-300 font-semibold">
+        👑 You’re already a Premium Member!
+      </div>
+    );
   }
 
+  // ✅ Main Premium Plans UI
   return (
     <div className="min-h-screen bg-gray-400 flex flex-col items-center py-16 px-6">
       {/* Header */}
@@ -71,8 +116,13 @@ const PremiumPlans = () => {
           <p className="text-gray-600 mb-6 leading-relaxed">
             Smarter matches, better visibility, and ad-free chatting for your daily social life.
           </p>
-          <div className="text-4xl font-extrabold text-blue-500 mb-4">₹199<span className="text-lg font-medium text-gray-600">/month</span></div>
-          <button onClick = {() => handlePlam('silver')} className="w-full bg-blue-500 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition">
+          <div className="text-4xl font-extrabold text-blue-500 mb-4">
+            ₹199<span className="text-lg font-medium text-gray-600">/month</span>
+          </div>
+          <button
+            onClick={() => handlePlan("silver")}
+            className="w-full bg-blue-500 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition"
+          >
             Choose Aurora
           </button>
         </div>
@@ -89,8 +139,13 @@ const PremiumPlans = () => {
           <p className="text-gray-800 mb-6 leading-relaxed">
             Unlock every premium feature — AI companion, global discovery, and unmatched control.
           </p>
-          <div className="text-4xl font-extrabold text-yellow-800 mb-4">₹499<span className="text-lg font-medium text-gray-700">/month</span></div>
-          <button onClick = {() => handlePlam('gold')} className="w-full bg-yellow-700 text-white py-3 rounded-xl font-semibold hover:bg-yellow-800 transition">
+          <div className="text-4xl font-extrabold text-yellow-800 mb-4">
+            ₹499<span className="text-lg font-medium text-gray-700">/month</span>
+          </div>
+          <button
+            onClick={() => handlePlan("gold")}
+            className="w-full bg-yellow-700 text-white py-3 rounded-xl font-semibold hover:bg-yellow-800 transition"
+          >
             Choose Nova Elite
           </button>
         </div>
@@ -110,13 +165,9 @@ const PremiumPlans = () => {
             {comparisonData.map((item, idx) => (
               <tr
                 key={idx}
-                className={`${
-                  idx % 2 === 0 ? "bg-gray-100/80" : "bg-gray-50/80"
-                } border-b border-gray-200`}
+                className={`${idx % 2 === 0 ? "bg-gray-100/80" : "bg-gray-50/80"} border-b border-gray-200`}
               >
-                <td className="py-3 px-4 text-left text-gray-800 font-medium">
-                  {item.feature}
-                </td>
+                <td className="py-3 px-4 text-left text-gray-800 font-medium">{item.feature}</td>
                 <td className="py-3 px-4 text-gray-700">
                   {item.aurora === true ? (
                     <FaCheck className="text-green-500 inline" />
