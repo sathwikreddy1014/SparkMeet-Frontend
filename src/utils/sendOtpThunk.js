@@ -5,7 +5,7 @@ import { BASE_URL } from "./constants";
 
 export const sendOtp = async (emailId) => {
   try {
-    const res = await axios.post(`${BASE_URL}/api/profile/forgot-password`,
+    const res = await axios.post(`${BASE_URL}/forgot-password`,
       { emailId }, // request body
       { withCredentials: true }
     );
