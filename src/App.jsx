@@ -12,10 +12,10 @@ import NewPassword from "./components/NewPassword";
 import ResetRoute from "./components/ResetRoute";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
-import Chat from "./components/Chat";
 import TermsAndConditions from "./components/PrivacyPolicy";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import PremiumPlans from "./components/PremiumPlans";
+import Chat from "./components/Chat";
 
 export default function App() {
   return (
@@ -59,8 +59,8 @@ export default function App() {
             <Route path="/edit" element={<Profile />} />
             <Route path="/connections" element={<Connections />} />
             <Route path="/request/review" element={<Requests/>} />
-            <Route path="/room/:id" element={<Chat />} />
             <Route path = "/premiunplans" element= {<PremiumPlans/>}/>
+            <Route path = "/chat/:targetUserId" element= {<Chat/>}/>
           </Route> 
         </Routes>
       </BrowserRouter>
