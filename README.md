@@ -1,3 +1,6 @@
+##### Deployed and live — currently improving UI, performance, and adding new features.####
+
+
 Create a Vite + React application
 Remove unecessary code and create a Hello World app
 Install Tailwind CSS
@@ -29,3 +32,5 @@ Feature - Accept/Reject connection request
 Send/Ignore the user card from the feed
 Signup New User
 E2E testing
+
+
