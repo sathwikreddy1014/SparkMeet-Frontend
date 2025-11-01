@@ -11,7 +11,6 @@ const Login = () => {
     emailId: "",
     password: "",
     firstName: "",
-    lastName: "",
     age: "",
     gender: "",
   });

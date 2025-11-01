@@ -1,20 +1,26 @@
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
-
+import {
+  Heart,
+  Users,
+  MessageCircle,
+  Star,
+  Settings,
+  Bell,
+} from "lucide-react";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((store) => store.user);
-  // (userData);
-  
 
   const handleLogout = async () => {
     try {
-      await axios.post(BASE_URL+"/logout", {}, { withCredentials: true });
+      await axios.post(`${BASE_URL}/logout`, {}, { withCredentials: true });
       dispatch(removeUser());
       navigate("/login");
     } catch (error) {
@@ -27,50 +33,97 @@ const Navbar = () => {
       ? userData.photoUrl[0]
       : "/default-avatar.png";
 
-  // ✅ Show navbar even if user not loaded, just without user info
   return (
-    <div className="navbar shadow-lg justify-between px-4 bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600">
-      {/* Left: Logo + Name */}
+    <nav className="flex items-center justify-between px-8 py-4 bg-white border-b border-gray-200">
+      {/* Left - Logo */}
       <div className="flex items-center gap-2">
-        <img
-          src="./logo.jpg"
-          alt="logo"
-          className="w-10 h-10 rounded-full shadow-lg"
-        />
-        <Link to="/" className="text-xl font-bold text-white">
-          Spark Meet
+        <Heart className="text-pink-500 w-6 h-6" />
+        <Link
+          to="/"
+          className="text-xl font-semibold text-gray-800 hover:text-pink-500 transition"
+        >
+          Spark
         </Link>
       </div>
 
-      {/* Right: User Dropdown (only if logged in) */}
+      {/* Center - Navigation */}
+      <div className="hidden md:flex items-center gap-8">
+        <Link
+          to="/feed"
+          className="text-gray-700 hover:text-pink-500 font-medium flex items-center gap-2"
+        >
+          <span className="bg-pink-100 text-pink-600 px-3 py-1 rounded-full font-semibold">
+            Feed
+          </span>
+        </Link>
+
+        <Link
+          to="/connections"
+          className="text-gray-700 hover:text-pink-500 font-medium flex items-center gap-2"
+        >
+          <Users className="w-4 h-4" /> Connections
+        </Link>
+
+        <Link
+          to="/request/review"
+          className="text-gray-700 hover:text-pink-500 font-medium flex items-center gap-2"
+        >
+          <Bell className="w-4 h-4" /> Requests
+        </Link>
+
+        <Link
+          to={`/chat/:targetUserId`}
+          className="text-gray-700 hover:text-pink-500 font-medium flex items-center gap-2"
+        >
+          <MessageCircle className="w-4 h-4" /> Chat
+        </Link>
+
+        <Link
+          to="/premiunplans"
+          className="text-gray-700 hover:text-pink-500 font-medium flex items-center gap-2"
+        >
+          <Star className="w-4 h-4" /> Premium
+        </Link>
+
+        <Link
+          to="/settings"
+          className="text-gray-700 hover:text-pink-500 font-medium flex items-center gap-2"
+        >
+          <Settings className="w-4 h-4" /> Settings
+        </Link>
+      </div>
+
+      {/* Right - Profile */}
       {userData ? (
-        <div className="flex items-center">
-          <div className="px-2 text-white">Welcome, {userData.firstName}</div>
-          <div className="dropdown dropdown-end mx-4">
+        <div className="flex items-center gap-3">
+          <div className="hidden sm:block text-gray-800 font-medium">
+            {userData.firstName}
+          </div>
+          <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img alt="user photo" src={avatarUrl} />
+                <img src={avatarUrl} alt="user avatar" />
               </div>
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-white rounded-lg shadow-lg mt-3 w-48"
             >
               <li>
-                <Link to="/edit">Profile</Link>
+                <Link to="/edit">Edit Profile</Link>
               </li>
               <li>
                 <Link to="/connections">Connections</Link>
               </li>
               <li>
-                <Link to="/request/review/">Requests</Link>
+                <Link to="/requests">Requests</Link>
               </li>
               <li>
-                <Link to="/premiunplans">Premium</Link>
+                <Link to="/premium">Premium</Link>
               </li>
               <li>
                 <button onClick={handleLogout}>Logout</button>
@@ -79,16 +132,14 @@ const Navbar = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <Link
-            to="/login"
-            className="btn btn-sm bg-white text-purple-600 font-semibold hover:bg-gray-200"
-          >
-            Logout
-          </Link>
-        </div>
+        <Link
+          to="/login"
+          className="btn bg-pink-500 text-white hover:bg-pink-600 font-semibold px-4 py-2 rounded-lg"
+        >
+          Login
+        </Link>
       )}
-    </div>
+    </nav>
   );
 };
 
