@@ -16,6 +16,8 @@ import TermsAndConditions from "./components/PrivacyPolicy";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import PremiumPlans from "./components/PremiumPlans";
 import Chat from "./components/Chat";
+import Setting from "./components/Setting"
+
 
 export default function App() {
   return (
@@ -57,6 +59,7 @@ export default function App() {
           <Route path="/" element={<Body />}>
             <Route index element={<Feed />} />
             <Route path="/edit" element={<Profile />} />
+            <Route path = "/info" element = {<Setting/>}/>
             <Route path="/connections" element={<Connections />} />
             <Route path="/request/review" element={<Requests/>} />
             <Route path = "/premiunplans" element= {<PremiumPlans/>}/>

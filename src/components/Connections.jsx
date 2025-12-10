@@ -25,72 +25,65 @@ const Connections = () => {
   }, []);
 
   if (!connections) return null;
+
   if (connections.length === 0)
     return (
       <div className="min-h-screen flex items-center justify-center bg-background text-white">
-        <h1 className="text-2xl font-semibold">No Connections Found</h1>
+        <h1 className="text-2xl font-semibold tracking-wide">
+          No Connections Found
+        </h1>
       </div>
     );
 
   return (
-    <div className="min-h-screen bg-background text-white">
-      <div className="container mx-auto px-4 pt-24 pb-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-8 text-center">
-            <h1 className="text-4xl font-bold mb-2">Your Connections</h1>
-            <p className="text-gray-400">People you’ve matched with</p>
-          </div>
+   <div className="w-full min-h-screen bg-[#FDF4EE] flex justify-center px-4 md:px-8 lg:px-16">
+  <div className="w-full max-w-7xl">
 
-          {/* Grid Layout for responsiveness */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {connections.map((connection, index) => {
-              const { _id, firstName, lastName, photoUrl, age, gender, about } =
-                connection;
+    {/* Page Header */}
+    <h1 className="text-4xl font-bold mb-6 bg-gradient-to-r from-orange-500 to-pink-500 text-transparent bg-clip-text">
+      Connections
+    </h1>
 
-              return (
-                <div
-                  key={_id}
-                  className="bg-base-300 rounded-2xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  {/* Profile Image */}
-                  <div className="relative">
-                    <img
-                      src={photoUrl}
-                      alt={firstName}
-                      className="w-full h-48 object-cover"
-                    />
-                  </div>
+    {/* Search */}
+    <input
+      className="w-full p-3 rounded-xl border border-gray-300 bg-white mb-4"
+      placeholder="Search connections..."
+    />
 
-                  {/* Details */}
-                  <div className="p-4 text-left">
-                    <h2 className="text-xl font-bold truncate">
-                      {firstName + " " + lastName}
-                    </h2>
-                    {age && gender && (
-                      <p className="text-gray-400 text-sm">
-                        {age}, {gender}
-                      </p>
-                    )}
-                    <p className="text-gray-300 text-sm mt-2 line-clamp-2">
-                      {about || "No bio available."}
-                    </p>
+    {/* Cards */}
+    <div className="space-y-6">
+      {connections.map((user) => (
+        <div
+          key={user._id}
+          className="bg-white p-5 rounded-2xl shadow-sm w-full
+          flex flex-col sm:flex-row sm:items-center gap-6"
+        >
+          {/* PFP */}
+          <img
+            src={user.photoUrl}
+            className="w-20 h-20 rounded-full object-cover border-4 border-pink-200"
+          />
 
-                    <div className="mt-4">
-                      <Link to={`/chat/${_id}`}>
-                        <button className="w-full btn btn-primary hover:opacity-90 transition-all duration-200">
-                          Chat
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+          {/* Info */}
+          <div className="flex-1">
+            <h2 className="text-xl text-black font-semibold">
+              {user.firstName} {user.lastName}
+              <span className="text-gray-500 ml-2">{user.age}</span>
+            </h2>
+
+            <p className="text-gray-600 mt-1">
+              {user.about || "No bio available."}
+            </p>
+
+            <button className="text-orange-500 mt-3">💬 Message</button>
           </div>
         </div>
-      </div>
+      ))}
     </div>
+
+  </div>
+</div>
+
   );
 };
 

@@ -1,9 +1,6 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { BASE_URL } from "../utils/constants";
-import { removeUser } from "../utils/userSlice";
+import { Link, useNavigate  } from "react-router-dom";
+import { useSelector, useDispatch  } from "react-redux";
 import {
   Heart,
   Users,
@@ -12,20 +9,15 @@ import {
   Settings,
   Bell,
 } from "lucide-react";
+import  { logoutUser } from "./Logout";
 
 const Navbar = () => {
+  const userData = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userData = useSelector((store) => store.user);
 
-  const handleLogout = async () => {
-    try {
-      await axios.post(`${BASE_URL}/logout`, {}, { withCredentials: true });
-      dispatch(removeUser());
-      navigate("/login");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
+  const handleLogout =  () => {
+    logoutUser(dispatch, navigate);
   };
 
   const avatarUrl =
@@ -86,7 +78,7 @@ const Navbar = () => {
         </Link>
 
         <Link
-          to="/settings"
+          to="/info"
           className="text-gray-700 hover:text-pink-500 font-medium flex items-center gap-2"
         >
           <Settings className="w-4 h-4" /> Settings
@@ -111,7 +103,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-white rounded-lg shadow-lg mt-3 w-48"
+              className="menu menu-sm dropdown-content bg-black rounded-lg shadow-lg mt-3 w-48"
             >
               <li>
                 <Link to="/edit">Edit Profile</Link>
@@ -120,10 +112,10 @@ const Navbar = () => {
                 <Link to="/connections">Connections</Link>
               </li>
               <li>
-                <Link to="/requests">Requests</Link>
+                <Link to="/request/review">Requests</Link>
               </li>
               <li>
-                <Link to="/premium">Premium</Link>
+                <Link to="/premiunplans">Premium</Link>
               </li>
               <li>
                 <button onClick={handleLogout}>Logout</button>
