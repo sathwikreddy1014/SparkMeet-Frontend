@@ -6,7 +6,7 @@ import { setForgotEmail } from "../utils/forgotSlice";
 
 
 const ForgotPassword = () => {
-  const [emailId, setemailId] = useState("sathwikreddy496@gmail.com");
+  const [emailId, setemailId] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, seterror] = useState('')
   const navigate = useNavigate();

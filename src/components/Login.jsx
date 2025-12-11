@@ -8,11 +8,11 @@ import { Heart } from "lucide-react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    emailId: "h2@gmail.com",
-    password: "Qwerty@123",
-    firstName: "sathwik",
-    lastName: "reddy",
-    age: "22",
+    emailId: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    age: "",
     gender: "",
   });
   const [isLogin, setIsLogin] = useState(true);
@@ -48,7 +48,6 @@ const Login = () => {
         navigate("/edit");
       }
     } catch (err) {
-       console.log( err?.response )
       setError(
         err?.response?.data?.message ||
           "Something went wrong. Please try again."

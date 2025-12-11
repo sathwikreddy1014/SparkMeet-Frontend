@@ -41,7 +41,7 @@ const Navbar = () => {
       {/* Center - Navigation */}
       <div className="hidden md:flex items-center gap-8">
         <Link
-          to="/feed"
+          to="/"
           className="text-gray-700 hover:text-pink-500 font-medium flex items-center gap-2"
         >
           <span className="bg-pink-100 text-pink-600 px-3 py-1 rounded-full font-semibold">
@@ -61,13 +61,6 @@ const Navbar = () => {
           className="text-gray-700 hover:text-pink-500 font-medium flex items-center gap-2"
         >
           <Bell className="w-4 h-4" /> Requests
-        </Link>
-
-        <Link
-          to={`/chat/:targetUserId`}
-          className="text-gray-700 hover:text-pink-500 font-medium flex items-center gap-2"
-        >
-          <MessageCircle className="w-4 h-4" /> Chat
         </Link>
 
         <Link

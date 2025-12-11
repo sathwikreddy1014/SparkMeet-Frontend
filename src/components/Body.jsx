@@ -44,8 +44,8 @@ const Body = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-400">
-      {/* Fixed Navbar */}
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-amber-50 text-black"> 
+ 0     {/* Fixed Navbar */}
       <div className="fixed top-0 left-0 right-0 z-50">
         <Navbar />
       </div>

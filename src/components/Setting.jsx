@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {logoutUser} from "./Logout"
 
 
+
 export default function Settings() {
 
   const user = useSelector((store => (store.user) || []))
@@ -41,6 +42,13 @@ export default function Settings() {
   }
   const handleLogout = () => {
      logoutUser(dispatch, navigate);
+  }
+  const handlepassword = () => {
+    navigate("/password-edit")
+  }
+
+  const handleSubscribe = () => {
+    navigate('/premiunplans')
   }
 
   return (
@@ -88,8 +96,19 @@ export default function Settings() {
 
           <div className="flex-1">
             <div className="flex items-center gap-3">
-              <h2 className="text-lg font-bold text-rose-700">{name}, {age}</h2>
-              <span className="ml-auto px-2 py-1 text-xs rounded-full bg-gradient-to-r from-rose-300 to-rose-500 text-white">Premium</span>
+              <h2 className="text-lg font-bold text-rose-700">{user?.firstName}, {user?.age}</h2>
+              {user?.isPremium === "True" ? (
+  <span className="ml-auto px-2 py-1 text-xs rounded-full bg-gradient-to-r from-rose-300 to-rose-500 text-white">
+    Premium
+  </span>
+) : (
+  <span className="ml-auto px-2 py-1 text-xs rounded-full bg-gradient-to-r from-rose-300 to-rose-500 text-white">
+    <button  onClick={handleSubscribe}>
+      Subscribe
+    </button>
+  </span>
+)}
+
             </div>
             <p className="text-sm text-gray-500">{location}</p>
             <button className="mt-3 text-rose-500 text-sm flex items-center gap-2" onClick={handleProfile}>
@@ -234,9 +253,11 @@ export default function Settings() {
 
           <ListRow label="Email Address" value={email} />
           <ListRow label="Phone Number" value={phone} />
-          <ListRow label="Change Password" />
           <ListRow label="Connected Accounts" value={connected} />
+          <button onClick={handlepassword} className="">Change Password</button>
         </section>
+
+
 
         {/* Logout & Delete */}
         <div className="space-y-3">

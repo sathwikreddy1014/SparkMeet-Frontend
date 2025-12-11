@@ -17,6 +17,7 @@ import PrivacyPolicy from "./components/PrivacyPolicy";
 import PremiumPlans from "./components/PremiumPlans";
 import Chat from "./components/Chat";
 import Setting from "./components/Setting"
+import ChangePassword from "./components/ChangePassword";
 
 
 export default function App() {
@@ -62,6 +63,7 @@ export default function App() {
             <Route path = "/info" element = {<Setting/>}/>
             <Route path="/connections" element={<Connections />} />
             <Route path="/request/review" element={<Requests/>} />
+             <Route path = "/password-edit" element= {<ChangePassword/>}/>
             <Route path = "/premiunplans" element= {<PremiumPlans/>}/>
             <Route path = "/chat/:targetUserId" element= {<Chat/>}/>
           </Route> 
